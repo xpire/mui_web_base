@@ -18,11 +18,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React from 'react';
-import {XAxis, YAxis, LineSeries, FlexibleWidthXYPlot} from 'react-vis';
-import Candlestick from './candlestick';
+import React from "react";
+import { XAxis, YAxis, LineSeries, FlexibleWidthXYPlot } from "react-vis";
+import Candlestick from "./candlestick";
 
-import './candlestick.scss';
+import "./candlestick.scss";
 
 /**
  * Generate random random for candle stick chart
@@ -37,10 +37,10 @@ function buildRandomBinnedData(total) {
         Math.random(),
         Math.random(),
         Math.random(),
-        Math.random()
+        Math.random(),
       ]
         .sort()
-        .map(d => Math.floor(d * 100));
+        .map((d) => Math.floor(d * 100));
       const y = (values[2] + values[1]) / 2;
       return {
         x: i,
@@ -49,8 +49,8 @@ function buildRandomBinnedData(total) {
         yOpen: values[2],
         yClose: values[1],
         yLow: values[0],
-        color: y < 25 ? '#EF5D28' : '#12939A',
-        opacity: y > 75 ? 0.7 : 1
+        color: y < 25 ? "#EF5D28" : "#12939A",
+        opacity: y > 75 ? 0.7 : 1,
       };
     });
   return result;
@@ -58,11 +58,11 @@ function buildRandomBinnedData(total) {
 
 export default class CandlestickExample extends React.Component {
   state = {
-    data: buildRandomBinnedData(30)
+    data: buildRandomBinnedData(30),
   };
 
   render() {
-    const {data} = this.state;
+    const { data } = this.state;
     return (
       <div className="candlestick-example">
         <div className="chart">
@@ -70,12 +70,12 @@ export default class CandlestickExample extends React.Component {
             <XAxis />
             <YAxis />
             <LineSeries color="#12939A" data={data} />
-            <LineSeries
+            {/* <LineSeries
               color="#FF9833"
               className="dashed-example-line"
               data={[
-                {x: 0, y: 25},
-                {x: 30, y: 25}
+                { x: 0, y: 25 },
+                { x: 30, y: 25 },
               ]}
             />
             <LineSeries
@@ -83,11 +83,12 @@ export default class CandlestickExample extends React.Component {
               className="dashed-example-line"
               opacity={0.3}
               data={[
-                {x: 0, y: 75},
-                {x: 30, y: 75}
+                { x: 0, y: 75 },
+                { x: 30, y: 75 },
               ]}
-            />
+            /> */}
             <Candlestick
+              animation
               colorType="literal"
               opacityType="literal"
               stroke="#79C7E3"
@@ -95,6 +96,15 @@ export default class CandlestickExample extends React.Component {
             />
           </FlexibleWidthXYPlot>
         </div>
+        <button
+          onClick={() =>
+            this.setState({
+              data: buildRandomBinnedData(Math.floor(Math.random() * 50) + 10),
+            })
+          }
+        >
+          new
+        </button>
       </div>
     );
   }

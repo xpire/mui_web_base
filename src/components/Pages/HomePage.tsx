@@ -3,9 +3,11 @@ import Page from "./Page";
 import { Typography, Container, Card } from "@material-ui/core";
 
 import CandleStickPlotVictory from "../Plots/Victory";
+import CandleStickPlotApex from "../Plots/Apexcharts";
 import { FinnhubData } from "../Plots/Victory";
 import * as data from "../Plots/sample.json";
 import * as data2 from "../Plots/sample2.json";
+// import * as data2 from "../Plots/sample3.json";
 
 const HomePage = () => {
   const convertUnixTimestampToDate = (ut: number) => new Date(ut * 1000);
@@ -28,6 +30,21 @@ const HomePage = () => {
       c: data2.c[index],
     };
   });
+
+  const apexPoints = data.t.map((elem, index) => {
+    return {
+      x: convertUnixTimestampToDate(elem),
+      y: [data.o[index], data.h[index], data.l[index], data.c[index]],
+    };
+  });
+
+  const apexPoints2 = data2.t.map((elem, index) => {
+    return {
+      x: convertUnixTimestampToDate(elem),
+      y: [data2.o[index], data2.h[index], data2.l[index], data2.c[index]],
+    };
+  });
+
   const [dataset, setDataset] = React.useState(true);
   return (
     <Page>
@@ -40,7 +57,7 @@ const HomePage = () => {
             together, go to the other pages for the graphs :D
           </Typography>
         </Container>
-        <CandleStickPlotVictory data={dataset ? dataPoints : dataPoints2} />
+        {/* <CandleStickPlotVictory data={dataset ? dataPoints : dataPoints2} /> */}
         <button
           onClick={() => {
             setDataset(!dataset);
@@ -48,6 +65,7 @@ const HomePage = () => {
         >
           Increase
         </button>
+        <CandleStickPlotApex series={dataset ? apexPoints : apexPoints2} />
       </Card>
     </Page>
   );
